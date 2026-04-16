@@ -92,5 +92,31 @@ class usuario
         }
     }
 
+    public function login()
+    {
+        $response = new Response();
+        $request = new Request();
+        //Obtener json enviado
+        $inputJSON = $request->getJSON();
+        $usuario = new UsuarioModel();
+        $result = $usuario->login($inputJSON);
+        if (isset($result) && !empty($result) && $result != false) {
+            $response->toJSON($result);
+        } else {
+            $response->toJSON($response, "Usuario no valido");
+        }
+    }
+    
+    public function create()
+    {
+        $response = new Response();
+        $request = new Request();
+        //Obtener json enviado
+        $inputJSON = $request->getJSON();
+        $usuario = new UsuarioModel();
+        $result = $usuario->create($inputJSON);
+        //Dar respuesta
+        $response->toJSON($result);
+    }
     
 }

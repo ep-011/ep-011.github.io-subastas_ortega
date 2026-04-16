@@ -146,4 +146,53 @@ public function delete($objeto)
         return $this->get($objeto->id_usuario);
 	}
 
+	public function login($objeto)
+	{
+		$vSql = "SELECT * from usuario where correo= '$objeto->correo'";
+		//Ejecutar la consulta
+		$vResultado = $this->enlace->ExecuteSQL($vSql);
+		if (is_object($vResultado[0])) {
+			$user = $vResultado[0];
+			if (password_verify($objeto->contrasena, $user->contrasena)) {
+				$usuario = $this->get($user->id_usuario);
+				if (!empty($usuario)) {
+					// Datos para el token JWT
+					$data = [
+						'id_usuario' => $usuario->id_usuario,
+						'correo' => $usuario->correo,
+						'rol' => $usuario->rol->id_rol,
+						'iat' => time(),  // Hora de emisión
+						'exp' => time() + 3600 // Expiración en 1 hora
+					];
+
+					// Generar el token JWT
+					$jwt_token = JWT::encode($data, config::get('SECRET_KEY'), 'HS256');
+
+					// Enviar el token como respuesta
+					return $jwt_token;
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public function create($objeto)
+	{
+		if (isset($objeto->contrasena) && $objeto->contrasena != null) {
+			$crypt = password_hash($objeto->contrasena, PASSWORD_BCRYPT);
+			$objeto->contrasena = $crypt;
+		}
+		//Consulta sql            
+		$vSql = "INSERT INTO `usuario` (`cedula`, `correo`, `contrasena`, `nombre`, 
+			`apellido1`, `apellido2`, `id_rol`, `id_estado_usuario`, `fecha_registro`) " .
+			" Values ('$objeto->cedula','$objeto->correo','$objeto->contrasena','$objeto->nombre',
+			'$objeto->apellido1','$objeto->apellido2', '1', '1', NOW())";
+
+		//Ejecutar la consulta
+		$vResultado = $this->enlace->executeSQL_DML_last($vSql);
+		// Retornar el objeto creado
+		return $this->get($vResultado);
+	}
+
 }
