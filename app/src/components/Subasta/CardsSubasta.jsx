@@ -139,6 +139,23 @@ export default function CardsSubasta({ data }) {
                                                 <TooltipContent>Ver detalle de la subasta</TooltipContent>
                                             </Tooltip>
                                         </TooltipProvider>
+
+                                        <TooltipProvider>
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Link to={`/subasta/pujar/${item.id_subasta}`}>
+                                                        <Button
+                                                            variant="link"
+                                                            className="px-0 font-bold uppercase tracking-wide text-[color:var(--color-accent)]"
+                                                        >
+                                                            Pujar
+                                                            <Info className="ml-2 h-4 w-4" />
+                                                        </Button>
+                                                    </Link>
+                                                </TooltipTrigger>
+                                                <TooltipContent>Pujar por este objeto</TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     </div>
                                     
                                 </div>
