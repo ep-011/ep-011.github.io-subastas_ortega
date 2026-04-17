@@ -160,7 +160,7 @@ public function delete($objeto)
 					$data = [
 						'id_usuario' => $usuario->id_usuario,
 						'correo' => $usuario->correo,
-						'rol' => $usuario->rol->id_rol,
+						'rol' => $usuario->rol->nombre,
 						'iat' => time(),  // Hora de emisión
 						'exp' => time() + 3600 // Expiración en 1 hora
 					];

@@ -28,28 +28,54 @@ import {
   MenubarItem,
 } from "@/components/ui/menubar";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { useUser } from "@/hooks/useUser";
+
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isAuthenticated = false;
-  const clearUser = () => {};
+
+    // Traer datos y funciones del contexto de usuario
+  const { user, isAuthenticated, clearUser, authorize } = useUser();
+  const userEmail = user?.correo || "Invitado";
+  const userID= user?.id_usuario;
   const totalItems = 0;
+  console.log(user);
 
-  const userEmail = "Invitado";
-  const id_user = 2;
-
+  
   const navItems = [
-    { title: "Ver subastas activas", href: "/subasta/lista/1", icon: <Hammer className="h-4 w-4" />, show: true },
-    { title: "Ver subastas inactivas", href: "/subasta/lista/2", icon: <Hammer className="h-4 w-4" />, show: true },
-    { title: "Ver todas", href: "/subasta/lista/3", icon: <Wrench className="h-4 w-4" />, show: true },
-    { title: "Prueba Pusher", href: "/test/realtime", icon: <Hammer className="h-4 w-4" />, show: true },
+    { title: "Ver subastas activas", 
+      href: "/subasta/lista/1", 
+      icon: <Hammer className="h-4 w-4" />, 
+      show: true },
+
+    { title: "Ver subastas inactivas", 
+      href: "/subasta/lista/2", 
+      icon: <Hammer className="h-4 w-4" />, 
+      show: authorize(["administrador"]) },
+
+    { title: "Ver todas", 
+      href: "/subasta/lista/3", 
+      icon: <Wrench className="h-4 w-4" />, 
+      show: authorize(["administrador"]) },
+  //  { title: "Prueba Pusher", href: "/test/realtime", icon: <Hammer className="h-4 w-4" />, show: true },
   ];
 
   const mantItems = [
-    { title: "Objetos", href: "objeto/lista/" + id_user , icon: <Tags className="h-4 w-4" />, show: true },
-    { title: "Usuarios", href: "usuarios/table/", icon: <Wrench className="h-4 w-4" />, show: true },
-    { title: "Subastas", href: "/subasta/misubasta/" + id_user, icon: <Wrench className="h-4 w-4" />, show: true },
+    { title: "Objetos",
+      href: "objeto/lista/" + userID,
+      icon: <Tags className="h-4 w-4" />,
+      show: authorize(["administrador", "vendedor"]) },
+
+    { title: "Usuarios",
+      href: "usuarios/table/",
+      icon: <Wrench className="h-4 w-4" />,
+      show: authorize(["administrador"]) },
+
+    { title: "Subastas",
+      href: "/subasta/misubasta/" + userID,
+      icon: <Wrench className="h-4 w-4" />,
+      show: authorize(["administrador", "vendedor"]) },
   ];
 
 

@@ -49,7 +49,7 @@ export function Home() {
           </a>
 
           <a
-            href="/auctions/create"
+            href="/user/login"
             className="px-7 py-3 rounded-lg font-semibold shadow-lg transition
                        border border-white/15 bg-black/25 text-white
                        hover:bg-black/35"
