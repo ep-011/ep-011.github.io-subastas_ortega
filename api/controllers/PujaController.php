@@ -34,4 +34,30 @@ class puja
         $response->toJSON($result);
     }
 
+   public function registrar()
+{
+    $response = new Response();
+
+    try {
+        $request = new Request();
+        $inputJSON = $request->getJSON();
+
+        $puja = new PujaModel();
+        $result = $puja->registrarPuja($inputJSON);
+
+        $response->toJSON([
+            "success" => true,
+            "message" => "Puja realizada",
+            "data" => $result
+        ]);
+
+    } catch (Exception $e) {
+        $response->toJSON([
+            "success" => false,
+            "message" => $e->getMessage(),
+            "data" => null
+        ]);
+    }
+}
+
 }

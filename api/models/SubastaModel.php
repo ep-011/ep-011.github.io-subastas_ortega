@@ -328,5 +328,33 @@ public function cantidad_pujas($id)
         return $this->get($objeto->id_subasta);
 	}
 
+    public function finalizar($objeto)
+	{
+		
+	//Consulta sql
+        $sql = "UPDATE subasta SET 
+				id_estado_subasta = 3
+				WHERE id_subasta = $objeto->id_subasta";
 
+        //Ejecutar la consulta
+        $Result = $this->enlace->executeSQL_DML($sql);
+
+        return $this->get($objeto->id_subasta);
+	}
+
+
+    public function setGanador($objeto)
+	{
+        $id = $objeto->id_subasta;
+	//Consulta sql
+        $sql = "UPDATE subasta SET 
+                id_puja_ganadora = $objeto->id_puja_ganadora
+			WHERE id_subasta= $id";
+
+        //Ejecutar la consulta
+        $idObjeto = $this->enlace->executeSQL_DML($sql);
+
+        //Retornar objeto
+        return $this->get($id);
+	}
 }
