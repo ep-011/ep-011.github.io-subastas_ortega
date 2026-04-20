@@ -11,5 +11,9 @@ class PujasService {
     getPujasPorSubasta(UserId) {
         return axios.get(BASE_URL + '/pujasPorSubasta/' + UserId);
     }
+    RegistrarPuja(UserId) {
+        return axios.post(BASE_URL + '/registrar/', UserId);
+    }
+
     }
     export default new PujasService();

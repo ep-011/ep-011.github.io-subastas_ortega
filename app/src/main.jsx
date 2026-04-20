@@ -20,6 +20,7 @@ import { CreateSubasta } from './components/Subasta/CreateSubasta'
 import { UpdateSubasta } from './components/Subasta/UpdateSubasta'
 import TestRealtime from "./components/TestRealTime.jsx";
 import LoginUser from "./components/Usuarios/Login";
+import CreatePuja from "./components/Subasta/CreatePuja";
 
 document.documentElement.classList.add("dark");
 const rutas = createBrowserRouter([
@@ -48,7 +49,8 @@ const rutas = createBrowserRouter([
         {path: "subasta/update/:id",element: <UpdateSubasta/>},
         {path: "puja/table/:id", element:<TablePujas/>},
         {path: "test/realtime", element:<TestRealtime/>},
-        {path: "/user/login", element:<LoginUser/>}
+        {path: "/user/login", element:<LoginUser/>},
+        {path: "/subasta/pujar/:id", element:<CreatePuja/>}
 
         
     ]
